@@ -1,4 +1,4 @@
-name: 'HelloWorld Build'
+name: 'Build'
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - run: cmake --build . --target package
       - run: ./unittest
       - name: Create Release Ubuntu
-        id: create_release
+        id: create_release_ubuntu
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,8 +31,8 @@ jobs:
           release_name: Release Ubuntu ${{ github.run_number }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
+      - name: Upload Release Asset Ubuntu
+        id: upload-release-asset-ubuntu
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
       - run: cmake --build . --config Release
       - run: .\Release\unittest.exe
       - name: Create Release Windows
-        id: create_release
+        id: create_release_windows
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -62,8 +62,8 @@ jobs:
           release_name: Release Windows ${{ github.run_number }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
+      - name: Upload Release Asset Windows
+        id: upload-release-asset-windows
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
