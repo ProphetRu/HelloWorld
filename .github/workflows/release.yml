@@ -22,8 +22,8 @@ jobs:
       - run: cmake --build . --target package
       - run: ./unittest
       - name: Create Release Ubuntu
-        id: create_release_ubuntu
-        uses: actions/create_release@v1
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -32,7 +32,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Release Asset Ubuntu
-        id: upload-release-asset-ubuntu
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
