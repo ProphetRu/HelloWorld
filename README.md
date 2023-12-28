@@ -3,7 +3,7 @@ Sample "Hello World" with [googletest](https://github.com/google/googletest)
 
 Can be used as a template for future projects for education only
 
-## How to build
+## Build local
 ```shell
 cd HelloWorld
 git clone https://github.com/google/googletest.git
