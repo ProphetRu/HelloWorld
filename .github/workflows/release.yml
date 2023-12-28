@@ -21,7 +21,26 @@ jobs:
       - run: cmake --build . --config Release
       - run: cmake --build . --target package
       - run: ctest
-          
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release Ubuntu ${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset Ubuntu
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
+          asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
+          asset_content_type: application/vnd.debian.binary-package
   build_windows:
     runs-on: windows-latest
     permissions: write-all
@@ -33,38 +52,13 @@ jobs:
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build . --config Release
       - run: ctest
-    
-  deploy:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset Ubuntu
-        id: upload-release-asset-ubuntu
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
-          asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
-          asset_content_type: application/vnd.debian.binary-package
       - name: Upload Release Asset Windows
-        id: upload-release-asset-windows
+        id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.build_ubuntu.outputs.upload-release-asset.upload_url }}
           asset_path: ./Release/helloworld.exe
           asset_name: helloworld-0.0.${{ github.run_number }}-Windows.exe
           asset_content_type: application/octet-stream
