@@ -41,13 +41,6 @@ jobs:
           asset_path: ./helloworld-0.0.${{ github.run_number }}-Linux.deb
           asset_name: helloworld-0.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
-    outputs:
-      version: ${{ steps.step_version.outputs.version }}
-      upload_url: ${{ steps.step_upload_url.outputs.upload_url }}
-      - id: step_version
-        run: echo "::set-output name=version::${{ steps.package_version.outputs.version }}"
-      - id: step_upload_url
-        run: echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
   build_windows:
     runs-on: windows-latest
     permissions: write-all
@@ -59,13 +52,23 @@ jobs:
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build . --config Release
       - run: .\Release\unittest.exe
+      - name: Create Release
+        id: create_release_windows
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release Windows ${{ github.run_number }}
+          draft: false
+          prerelease: false
       - name: Upload Release Asset Windows
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.build_ubuntu.outputs.upload_url }}
+          upload_url: ${{ steps.create_release_windows.outputs.upload_url }}
           asset_path: ./Release/helloworld.exe
           asset_name: helloworld-0.0.${{ github.run_number }}-Windows.exe
           asset_content_type: application/octet-stream
