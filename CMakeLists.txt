@@ -10,7 +10,7 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 set(PROJECT_NAME helloworld )
-set(TEST_NAME test)
+set(TEST_NAME unittest)
 
 
 #--------------------------------------------------------------------------------------------------
