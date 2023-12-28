@@ -21,13 +21,13 @@ jobs:
       - run: cmake --build . --config Release
       - run: cmake --build . --target package
       - run: ./unittest
-      - name: Create Release
+      - name: Create Release Ubuntu
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: Ubuntu ${{ github.run_number }}
+          tag_name: ${{ github.run_number }}
           release_name: Release Ubuntu ${{ github.run_number }}
           draft: false
           prerelease: false
@@ -52,13 +52,13 @@ jobs:
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build . --config Release
       - run: .\Release\unittest.exe
-      - name: Create Release
+      - name: Create Release Windows
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: Windows ${{ github.run_number }}
+          tag_name: ${{ github.run_number }}
           release_name: Release Windows ${{ github.run_number }}
           draft: false
           prerelease: false
