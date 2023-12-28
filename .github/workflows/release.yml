@@ -20,7 +20,7 @@ jobs:
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build . --config Release
       - run: cmake --build . --target package
-      - run: cd build && ./unittests
+      - run: pwd && ls -la
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
