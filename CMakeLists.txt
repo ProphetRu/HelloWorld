@@ -105,3 +105,7 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT 155024765+ProphetRu@users.noreply.github.com)
 
 include(CPack)
+
+enable_testing()
+include(GoogleTest)
+gtest_discover_tests(${TEST_NAME})
