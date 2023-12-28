@@ -23,7 +23,7 @@ jobs:
       - run: ./unittest
       - name: Create Release Ubuntu
         id: create_release_ubuntu
-        uses: actions/create_release_ubuntu@v1
+        uses: actions/create_release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -33,7 +33,7 @@ jobs:
           prerelease: false
       - name: Upload Release Asset Ubuntu
         id: upload-release-asset-ubuntu
-        uses: actions/upload-release-asset-ubuntu@v1
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
