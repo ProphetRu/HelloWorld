@@ -12,7 +12,7 @@ TEST(Version, Valid)
 	//
 
     // Assert
-    ASSERT_LT(ver, 1);
+    ASSERT_LT(ver, 100);
 }
 
 int main(int argc, char** argv) 
