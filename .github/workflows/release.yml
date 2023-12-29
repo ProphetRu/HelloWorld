@@ -45,6 +45,7 @@ jobs:
           asset_content_type: application/vnd.debian.binary-package
   build_windows:
     runs-on: windows-latest
+    needs: build_ubuntu
     permissions: write-all
     steps:
       - uses: actions/checkout@v3
