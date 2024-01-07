@@ -27,5 +27,3 @@ cmake --build .
 # release
 cmake --build . --config Release
 ```
-
-#otus #cpp #cmake #gtest
