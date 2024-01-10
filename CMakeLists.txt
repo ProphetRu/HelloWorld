@@ -51,13 +51,6 @@ if (MSVC)
 		${CMAKE_CURRENT_SOURCE_DIR}/googletest
 	)
 
-	# add src to the include directories for the test target
-	target_include_directories(${TEST_NAME} 
-		PRIVATE
-		${SRC_DIR}
-		${GTEST_INCLUDE_DIRS}
-	)
-
 	# link test target against gtest libraries
 	target_link_libraries(${TEST_NAME} 
 		PRIVATE
@@ -68,6 +61,13 @@ if (MSVC)
 		gtest_main
 	)
 endif()
+
+# add src to the include directories for the test target
+target_include_directories(${TEST_NAME} 
+	PRIVATE
+	${SRC_DIR}
+	${GTEST_INCLUDE_DIRS}
+)
 
 
 #--------------------------------------------------------------------------------------------------
