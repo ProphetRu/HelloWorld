@@ -52,20 +52,21 @@ target_include_directories(${TEST_NAME}
 	${GTEST_INCLUDE_DIRS}
 )
 
-# link test target against gtest libraries
-target_link_libraries(${TEST_NAME} 
-	PRIVATE
-	${GTEST_BOOTH_LIBRARIES}
-	gmock
-	gmock_main
-	gtest 
-	gtest_main
-)
 
 if (MSVC)
 	# build googletest
 	add_subdirectory(
 		${CMAKE_CURRENT_SOURCE_DIR}/googletest
+	)
+	
+	# link test target against gtest libraries
+	target_link_libraries(${TEST_NAME} 
+		PRIVATE
+		${GTEST_BOOTH_LIBRARIES}
+		gmock
+		gmock_main
+		gtest 
+		gtest_main
 	)
 endif()
 
